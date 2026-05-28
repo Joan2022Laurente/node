@@ -1,0 +1,90 @@
+{
+  "_comentario": "Schema oficial para AtomicPromptGenerator (azzia-nodes). Guarda como .json e importa en el campo db_file del nodo.",
+
+  "character": {
+    "_comentario": "Opcional. Si está presente, sobreescribe los campos del nodo. Quita esta sección si prefieres editar subject/traits/outfit/quality directo en el nodo.",
+    "subject": "a girl",
+    "traits":  "red hair, blue eyes, freckles",
+    "outfit":  "red swimsuit",
+    "quality": "4k, raw photo, sharp focus, realistic skin texture, f/1.8"
+  },
+
+  "slots": {
+    "_comentario_formato": "Cada slot acepta DOS formatos: string simple O objeto con token+tags. Puedes mezclar libremente.",
+
+    "verb": [
+      {"token": "playing",    "tags": ["dynamic", "casual"]},
+      {"token": "running",    "tags": ["dynamic", "energetic"]},
+      {"token": "sitting",    "tags": ["calm",    "casual"]},
+      {"token": "stretching", "tags": ["dynamic", "sensual"]},
+      {"token": "gazing",     "tags": ["calm",    "dreamy"]},
+      {"token": "wading",     "tags": ["calm",    "outdoor"]},
+      {"token": "resting",    "tags": ["calm",    "casual"]},
+      {"token": "posing",     "tags": ["sensual", "editorial"]},
+      {"token": "leaning",    "tags": ["casual",  "editorial"]},
+      {"token": "smiling",    "tags": ["casual",  "warm"]},
+      {"token": "laughing",   "tags": ["dynamic", "warm"]},
+      {"token": "lying down", "tags": ["calm",    "sensual"]}
+    ],
+
+    "adverb": [
+      {"token": "playfully",   "tags": ["dynamic",   "casual"]},
+      {"token": "gracefully",  "tags": ["calm",      "editorial"]},
+      {"token": "lazily",      "tags": ["calm",      "casual"]},
+      {"token": "intensely",   "tags": ["dynamic",   "dramatic"]},
+      {"token": "dreamily",    "tags": ["calm",      "dreamy"]},
+      {"token": "confidently", "tags": ["editorial", "sensual"]},
+      {"token": "quietly",     "tags": ["calm",      "dreamy"]},
+      {"token": "sensually",   "tags": ["sensual",   "editorial"]}
+    ],
+
+    "location": [
+      {"token": "on the beach",        "tags": ["outdoor", "warm"]},
+      {"token": "in the waves",        "tags": ["outdoor", "warm"]},
+      {"token": "near the rocks",      "tags": ["outdoor", "dramatic"]},
+      {"token": "at the shoreline",    "tags": ["outdoor", "warm"]},
+      {"token": "on the pier",         "tags": ["outdoor", "casual"]},
+      {"token": "by a swimming pool",  "tags": ["outdoor", "warm"]},
+      {"token": "in a tropical garden","tags": ["outdoor", "warm"]},
+      {"token": "on a rooftop terrace","tags": ["outdoor", "urban"]},
+      {"token": "in an alley",         "tags": ["urban",   "dramatic"]},
+      {"token": "in a white studio",   "tags": ["indoor",  "editorial"]},
+      {"token": "on a bed",            "tags": ["indoor",  "sensual"]},
+      {"token": "in soft window light","tags": ["indoor",  "calm"]}
+    ],
+
+    "angle": [
+      {"token": "wide shot",          "tags": ["outdoor",   "dynamic"]},
+      {"token": "close-up portrait",  "tags": ["editorial", "calm"]},
+      {"token": "low angle shot",     "tags": ["dramatic",  "dynamic"]},
+      {"token": "overhead shot",      "tags": ["outdoor",   "casual"]},
+      {"token": "side profile",       "tags": ["editorial", "sensual"]},
+      {"token": "dutch angle",        "tags": ["dramatic",  "urban"]},
+      {"token": "medium shot",        "tags": ["casual",    "editorial"]},
+      {"token": "three-quarter view", "tags": ["editorial", "sensual"]}
+    ],
+
+    "lighting": [
+      {"token": "golden hour light",       "tags": ["warm",     "outdoor"]},
+      {"token": "soft morning light",      "tags": ["calm",     "outdoor"]},
+      {"token": "dramatic sunset",         "tags": ["dramatic", "outdoor"]},
+      {"token": "overcast diffused light", "tags": ["calm",     "outdoor"]},
+      {"token": "neon reflections",        "tags": ["urban",    "dramatic"]},
+      {"token": "studio softbox light",    "tags": ["indoor",   "editorial"]},
+      {"token": "candlelight",             "tags": ["indoor",   "warm"]},
+      {"token": "hard sunlight",           "tags": ["outdoor",  "dynamic"]},
+      {"token": "rimlight",                "tags": ["dramatic", "editorial"]}
+    ],
+
+    "mood": [
+      {"token": "cinematic",   "tags": ["dramatic", "editorial"]},
+      {"token": "editorial",   "tags": ["editorial","calm"]},
+      {"token": "candid",      "tags": ["casual",   "dynamic"]},
+      {"token": "serene",      "tags": ["calm",     "dreamy"]},
+      {"token": "vibrant",     "tags": ["dynamic",  "warm"]},
+      {"token": "ethereal",    "tags": ["dreamy",   "calm"]},
+      {"token": "provocative", "tags": ["sensual",  "editorial"]},
+      {"token": "dreamy",      "tags": ["dreamy",   "calm"]}
+    ]
+  }
+}
