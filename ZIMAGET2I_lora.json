@@ -5,257 +5,795 @@
   "last_link_id": 21,
   "nodes": [
     {
-      "id": 1,
-      "type": "UNETCapture",
-      "pos": [40, 130],
-      "size": [380, 58],
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        40,
+        370
+      ],
+      "size": [
+        380,
+        58
+      ],
       "flags": {},
       "order": 0,
       "mode": 0,
       "inputs": [],
-      "outputs": [{"name": "MODEL", "type": "MODEL", "slot_index": 0, "links": [1]}],
-      "title": "🧠 Dark Beast FP8 (Auto-Capture)",
-      "properties": {"Node name for S&R": "UNETCapture"},
-      "widgets_values": ["darkbeast_fp8.safetensors", "fp8_e4m3fn"]
-    },
-    {
-      "id": 2,
-      "type": "CLIPLoader",
-      "pos": [40, 230],
-      "size": [380, 106],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [{"name": "CLIP", "type": "CLIP", "slot_index": 0, "links": [11]}],
-      "title": "📝 Qwen3-4B Text Encoder",
-      "properties": {"Node name for S&R": "CLIPLoader"},
-      "widgets_values": ["qwen_3_4b.safetensors", "qwen", "default"]
-    },
-    {
-      "id": 3,
-      "type": "VAELoader",
-      "pos": [40, 370],
-      "size": [380, 58],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [{"name": "VAE", "type": "VAE", "slot_index": 0, "links": [4]}],
-      "title": "🖼️ Flux VAE",
-      "properties": {"Node name for S&R": "VAELoader"},
-      "widgets_values": ["ae.safetensors"]
-    },
-    {
-      "id": 10,
-      "type": "LoraLoaderCapture",
-      "pos": [480, 130],
-      "size": [380, 130],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [
-        {"name": "model", "type": "MODEL", "link": 1},
-        {"name": "clip",  "type": "CLIP",  "link": 11}
-      ],
       "outputs": [
-        {"name": "MODEL", "type": "MODEL", "slot_index": 0, "links": [12]},
-        {"name": "CLIP",  "type": "CLIP",  "slot_index": 1, "links": [13, 14]}
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [
+            4
+          ]
+        }
       ],
-      "title": "✨ LoRA — YummyHDzit (Auto-Capture)",
-      "properties": {"Node name for S&R": "LoraLoaderCapture"},
-      "widgets_values": ["YummyHDzit.safetensors", 1.0, 1.0]
-    },
-    {
-      "id": 11,
-      "type": "TextPassthrough",
-      "pos": [480, 310],
-      "size": [380, 115],
-      "flags": {},
-      "order": 4,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [{"name": "text", "type": "STRING", "slot_index": 0, "links": [15, 20]}],
-      "title": "📝 Prompt Positivo",
-      "properties": {"Node name for S&R": "TextPassthrough"},
-      "widgets_values": ["photograph of a beautiful woman, 35mm lens, natural light, sharp focus, realistic skin texture, high detail"]
+      "title": "🖼️ Flux VAE",
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ]
     },
     {
       "id": 12,
       "type": "TextPassthrough",
-      "pos": [480, 460],
-      "size": [380, 100],
+      "pos": [
+        480,
+        460
+      ],
+      "size": [
+        380,
+        100
+      ],
       "flags": {},
-      "order": 5,
+      "order": 1,
       "mode": 0,
       "inputs": [],
-      "outputs": [{"name": "text", "type": "STRING", "slot_index": 0, "links": [16, 21]}],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "slot_index": 0,
+          "links": [
+            16,
+            21
+          ]
+        }
+      ],
       "title": "📝 Prompt Negativo",
-      "properties": {"Node name for S&R": "TextPassthrough"},
-      "widgets_values": ["blurry, deformed, bad anatomy, watermark, low quality, CGI"]
+      "properties": {
+        "Node name for S&R": "TextPassthrough"
+      },
+      "widgets_values": [
+        "blurry, deformed, bad anatomy, watermark, low quality, CGI"
+      ]
     },
     {
       "id": 4,
       "type": "CLIPTextEncode",
-      "pos": [920, 130],
-      "size": [460, 160],
+      "pos": [
+        920,
+        130
+      ],
+      "size": [
+        460,
+        160
+      ],
       "flags": {},
-      "order": 6,
+      "order": 8,
       "mode": 0,
       "inputs": [
-        {"name": "clip", "type": "CLIP",   "link": 13},
-        {"name": "text", "type": "STRING", "link": 15, "widget": {"name": "text"}}
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 13
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 15
+        }
       ],
-      "outputs": [{"name": "CONDITIONING", "type": "CONDITIONING", "slot_index": 0, "links": [5]}],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            5
+          ]
+        }
+      ],
       "title": "✏️ PROMPT POSITIVO",
-      "properties": {"Node name for S&R": "CLIPTextEncode"},
-      "widgets_values": []
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ]
     },
     {
       "id": 5,
       "type": "CLIPTextEncode",
-      "pos": [920, 320],
-      "size": [460, 110],
+      "pos": [
+        920,
+        320
+      ],
+      "size": [
+        460,
+        110
+      ],
       "flags": {},
-      "order": 7,
+      "order": 9,
       "mode": 0,
       "inputs": [
-        {"name": "clip", "type": "CLIP",   "link": 14},
-        {"name": "text", "type": "STRING", "link": 16, "widget": {"name": "text"}}
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 14
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 16
+        }
       ],
-      "outputs": [{"name": "CONDITIONING", "type": "CONDITIONING", "slot_index": 0, "links": [6]}],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            6
+          ]
+        }
+      ],
       "title": "🚫 PROMPT NEGATIVO",
-      "properties": {"Node name for S&R": "CLIPTextEncode"},
-      "widgets_values": []
-    },
-    {
-      "id": 6,
-      "type": "EmptySD3LatentImage",
-      "pos": [920, 460],
-      "size": [340, 106],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [{"name": "LATENT", "type": "LATENT", "slot_index": 0, "links": [7]}],
-      "title": "📐 Resolución",
-      "properties": {"Node name for S&R": "EmptySD3LatentImage"},
-      "widgets_values": [1024, 1024, 1]
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ]
     },
     {
       "id": 13,
       "type": "SeedCapture",
-      "pos": [1440, 430],
-      "size": [280, 90],
+      "pos": [
+        1440,
+        430
+      ],
+      "size": [
+        280,
+        102
+      ],
       "flags": {},
-      "order": 9,
+      "order": 2,
       "mode": 0,
       "inputs": [],
       "outputs": [
-        {"name": "seed",      "type": "INT", "slot_index": 0, "links": [17]},
-        {"name": "seed_copy", "type": "INT", "slot_index": 1, "links": [18]}
+        {
+          "name": "seed",
+          "type": "INT",
+          "slot_index": 0,
+          "links": [
+            17
+          ]
+        },
+        {
+          "name": "seed_copy",
+          "type": "INT",
+          "slot_index": 1,
+          "links": [
+            18
+          ]
+        }
       ],
-      "title": "🎲 Seed Capture",
-      "properties": {"Node name for S&R": "SeedCapture"},
-      "widgets_values": [42]
-    },
-    {
-      "id": 7,
-      "type": "KSampler",
-      "pos": [1440, 130],
-      "size": [380, 270],
-      "flags": {},
-      "order": 10,
-      "mode": 0,
-      "inputs": [
-        {"name": "model",        "type": "MODEL",        "link": 12},
-        {"name": "positive",     "type": "CONDITIONING", "link": 5},
-        {"name": "negative",     "type": "CONDITIONING", "link": 6},
-        {"name": "latent_image", "type": "LATENT",       "link": 7},
-        {"name": "seed",         "type": "INT",          "link": 17, "widget": {"name": "seed"}}
-      ],
-      "outputs": [{"name": "LATENT", "type": "LATENT", "slot_index": 0, "links": [8]}],
-      "title": "🎛️ KSampler  [Steps=8 · CFG=1.0 · euler/beta]",
-      "properties": {"Node name for S&R": "KSampler"},
-      "widgets_values": ["fixed", 8, 1.0, "euler", "beta", 1]
+      "properties": {
+        "Node name for S&R": "SeedCapture"
+      },
+      "widgets_values": [
+        416906076444353,
+        "randomize"
+      ]
     },
     {
       "id": 8,
       "type": "VAEDecode",
-      "pos": [1880, 130],
-      "size": [230, 58],
+      "pos": [
+        1880,
+        130
+      ],
+      "size": [
+        230,
+        58
+      ],
       "flags": {},
       "order": 11,
       "mode": 0,
       "inputs": [
-        {"name": "samples", "type": "LATENT", "link": 8},
-        {"name": "vae",     "type": "VAE",    "link": 4}
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 8
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4
+        }
       ],
-      "outputs": [{"name": "IMAGE", "type": "IMAGE", "slot_index": 0, "links": [9, 19]}],
-      "properties": {"Node name for S&R": "VAEDecode"},
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            9,
+            19
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
       "widgets_values": []
     },
     {
       "id": 9,
       "type": "SaveImage",
-      "pos": [2160, 130],
-      "size": [320, 58],
+      "pos": [
+        2160,
+        130
+      ],
+      "size": [
+        320,
+        270
+      ],
       "flags": {},
       "order": 12,
       "mode": 0,
-      "inputs": [{"name": "images", "type": "IMAGE", "link": 9}],
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 9
+        }
+      ],
       "outputs": [],
       "title": "💾 Guardar imagen",
-      "properties": {"Node name for S&R": "SaveImage"},
-      "widgets_values": ["zimage_t2i"]
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "zimage_t2i"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "UNETCapture",
+      "pos": [
+        40,
+        130
+      ],
+      "size": [
+        380,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            1
+          ]
+        }
+      ],
+      "title": "🧠 Dark Beast FP8 (Auto-Capture)",
+      "properties": {
+        "Node name for S&R": "UNETCapture"
+      },
+      "widgets_values": [
+        "divingZimageTurbo.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [
+        40,
+        230
+      ],
+      "size": [
+        380,
+        106
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [
+            11
+          ]
+        }
+      ],
+      "title": "📝 Qwen3-4B Text Encoder",
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen_3_4b.safetensors",
+        "lumina2",
+        "default"
+      ]
     },
     {
       "id": 14,
       "type": "PostImageToAPI",
-      "pos": [2160, 230],
-      "size": [430, 220],
+      "pos": [
+        2160,
+        230
+      ],
+      "size": [
+        430,
+        220
+      ],
       "flags": {},
       "order": 13,
       "mode": 0,
       "inputs": [
-        {"name": "images",          "type": "IMAGE",  "link": 19},
-        {"name": "positive_prompt", "type": "STRING", "link": 20},
-        {"name": "negative_prompt", "type": "STRING", "link": 21},
-        {"name": "seed",            "type": "INT",    "link": 18}
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 19
+        },
+        {
+          "name": "positive_prompt",
+          "shape": 7,
+          "type": "STRING",
+          "link": 20
+        },
+        {
+          "name": "negative_prompt",
+          "shape": 7,
+          "type": "STRING",
+          "link": 21
+        },
+        {
+          "name": "seed",
+          "shape": 7,
+          "type": "INT",
+          "link": 18
+        }
       ],
       "outputs": [],
-      "title": "🚀 Send Encrypted Image to Azzia",
-      "properties": {"Node name for S&R": "PostImageToAPI"},
-      "widgets_values": ["", "https://corelink.onrender.com/azzia/prompt"]
+      "properties": {
+        "Node name for S&R": "PostImageToAPI"
+      },
+      "widgets_values": [
+        "935348536JoanComeCeviche",
+        "https://corelink.onrender.com/azzia/prompts"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "EmptySD3LatentImage",
+      "pos": [
+        920,
+        460
+      ],
+      "size": [
+        340,
+        106
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            7
+          ]
+        }
+      ],
+      "title": "📐 Resolución",
+      "properties": {
+        "Node name for S&R": "EmptySD3LatentImage"
+      },
+      "widgets_values": [
+        640,
+        960,
+        1
+      ]
+    },
+    {
+      "id": 11,
+      "type": "TextPassthrough",
+      "pos": [
+        480,
+        310
+      ],
+      "size": [
+        380,
+        115
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "slot_index": 0,
+          "links": [
+            15,
+            20
+          ]
+        }
+      ],
+      "title": "📝 Prompt Positivo",
+      "properties": {
+        "Node name for S&R": "TextPassthrough"
+      },
+      "widgets_values": [
+        "masterpiece, best quality, 1girl, solo, dynamic angle, looking at viewer, smile, open clothes, medium breasts, long hair, detailed background"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "KSampler",
+      "pos": [
+        1440,
+        130
+      ],
+      "size": [
+        380,
+        270
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 12
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 5
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 6
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 7
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            8
+          ]
+        }
+      ],
+      "title": "🎛️ KSampler  [Steps=8 · CFG=1.0 · euler/beta]",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        null,
+        8,
+        11,
+        1,
+        "euler",
+        "normal",
+        1
+      ]
+    },
+    {
+      "id": 10,
+      "type": "LoraLoaderCapture",
+      "pos": [
+        480,
+        130
+      ],
+      "size": [
+        380,
+        130
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            12
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 1,
+          "links": [
+            13,
+            14
+          ]
+        }
+      ],
+      "title": "✨ LoRA — YummyHDzit (Auto-Capture)",
+      "properties": {
+        "Node name for S&R": "LoraLoaderCapture"
+      },
+      "widgets_values": [
+        "ahe.safetensors",
+        0,
+        1
+      ]
     }
   ],
   "links": [
-    [1,  1,  0, 10, 0, "MODEL"],
-    [4,  3,  0,  8, 1, "VAE"],
-    [5,  4,  0,  7, 1, "CONDITIONING"],
-    [6,  5,  0,  7, 2, "CONDITIONING"],
-    [7,  6,  0,  7, 3, "LATENT"],
-    [8,  7,  0,  8, 0, "LATENT"],
-    [9,  8,  0,  9, 0, "IMAGE"],
-    [11, 2,  0, 10, 1, "CLIP"],
-    [12, 10, 0,  7, 0, "MODEL"],
-    [13, 10, 1,  4, 0, "CLIP"],
-    [14, 10, 1,  5, 0, "CLIP"],
-    [15, 11, 0,  4, 1, "STRING"],
-    [16, 12, 0,  5, 1, "STRING"],
-    [17, 13, 0,  7, 4, "INT"],
-    [18, 13, 1, 14, 3, "INT"],
-    [19, 8,  0, 14, 0, "IMAGE"],
-    [20, 11, 0, 14, 1, "STRING"],
-    [21, 12, 0, 14, 2, "STRING"]
+    [
+      1,
+      1,
+      0,
+      10,
+      0,
+      "MODEL"
+    ],
+    [
+      4,
+      3,
+      0,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      5,
+      4,
+      0,
+      7,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      6,
+      5,
+      0,
+      7,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      7,
+      6,
+      0,
+      7,
+      3,
+      "LATENT"
+    ],
+    [
+      8,
+      7,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      9,
+      8,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      11,
+      2,
+      0,
+      10,
+      1,
+      "CLIP"
+    ],
+    [
+      12,
+      10,
+      0,
+      7,
+      0,
+      "MODEL"
+    ],
+    [
+      13,
+      10,
+      1,
+      4,
+      0,
+      "CLIP"
+    ],
+    [
+      14,
+      10,
+      1,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      15,
+      11,
+      0,
+      4,
+      1,
+      "STRING"
+    ],
+    [
+      16,
+      12,
+      0,
+      5,
+      1,
+      "STRING"
+    ],
+    [
+      17,
+      13,
+      0,
+      7,
+      4,
+      "INT"
+    ],
+    [
+      18,
+      13,
+      1,
+      14,
+      3,
+      "INT"
+    ],
+    [
+      19,
+      8,
+      0,
+      14,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      11,
+      0,
+      14,
+      1,
+      "STRING"
+    ],
+    [
+      21,
+      12,
+      0,
+      14,
+      2,
+      "STRING"
+    ]
   ],
   "groups": [
-    {"id": 1, "title": "📦 Modelos",              "bounding": [20,  100, 870, 490],  "color": "#2a363b", "flags": {}},
-    {"id": 2, "title": "✏️ Prompts + Res",        "bounding": [900, 100, 510, 500],  "color": "#2a3b2a", "flags": {}},
-    {"id": 3, "title": "🎛️ Sampler + Salida",     "bounding": [1420, 100, 1200, 450],"color": "#2a2a3b", "flags": {}},
-    {"id": 4, "title": "🚀 Captura & Envío Azzia","bounding": [2140, 110, 470, 380], "color": "#3b2a2a", "flags": {}}
+    {
+      "id": 1,
+      "title": "📦 Modelos",
+      "bounding": [
+        20,
+        100,
+        870,
+        490
+      ],
+      "color": "#2a363b",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "✏️ Prompts + Res",
+      "bounding": [
+        900,
+        100,
+        510,
+        500
+      ],
+      "color": "#2a3b2a",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "🎛️ Sampler + Salida",
+      "bounding": [
+        1420,
+        100,
+        1200,
+        450
+      ],
+      "color": "#2a2a3b",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "🚀 Captura & Envío Azzia",
+      "bounding": [
+        2140,
+        110,
+        470,
+        380
+      ],
+      "color": "#3b2a2a",
+      "flags": {}
+    }
   ],
   "config": {},
-  "extra": {"frontendVersion": "1.43.18"},
+  "extra": {
+    "frontendVersion": "1.44.19",
+    "ds": {
+      "scale": 1.3762069490839521,
+      "offset": [
+        -190.06909859361744,
+        -214.31917109135017
+      ]
+    }
+  },
   "version": 0.4
 }
