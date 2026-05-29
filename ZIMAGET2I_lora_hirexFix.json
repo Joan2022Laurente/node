@@ -1,8 +1,8 @@
 {
   "id": "zimage-turbo-t2i-v1",
-  "revision": 0,
-  "last_node_id": 14,
-  "last_link_id": 21,
+  "revision": 1,
+  "last_node_id": 17,
+  "last_link_id": 33,
   "nodes": [
     {
       "id": 3,
@@ -72,6 +72,54 @@
       ]
     },
     {
+      "id": 4,
+      "type": "CLIPTextEncode",
+      "pos": [
+        920,
+        130
+      ],
+      "size": [
+        460,
+        160
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 31
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            5,
+            24
+          ]
+        }
+      ],
+      "title": "✏️ PROMPT POSITIVO",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
       "id": 5,
       "type": "CLIPTextEncode",
       "pos": [
@@ -83,13 +131,13 @@
         110
       ],
       "flags": {},
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
           "name": "clip",
           "type": "CLIP",
-          "link": 14
+          "link": 32
         },
         {
           "name": "text",
@@ -106,7 +154,8 @@
           "type": "CONDITIONING",
           "slot_index": 0,
           "links": [
-            6
+            6,
+            25
           ]
         }
       ],
@@ -119,51 +168,10 @@
       ]
     },
     {
-      "id": 13,
-      "type": "SeedCapture",
-      "pos": [
-        1440,
-        430
-      ],
-      "size": [
-        280,
-        102
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "seed",
-          "type": "INT",
-          "slot_index": 0,
-          "links": [
-            17
-          ]
-        },
-        {
-          "name": "seed_copy",
-          "type": "INT",
-          "slot_index": 1,
-          "links": [
-            18
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SeedCapture"
-      },
-      "widgets_values": [
-        951918840883237,
-        "randomize"
-      ]
-    },
-    {
       "id": 8,
       "type": "VAEDecode",
       "pos": [
-        1880,
+        2760,
         130
       ],
       "size": [
@@ -171,13 +179,13 @@
         58
       ],
       "flags": {},
-      "order": 11,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 8
+          "link": 27
         },
         {
           "name": "vae",
@@ -205,7 +213,7 @@
       "id": 9,
       "type": "SaveImage",
       "pos": [
-        2160,
+        3050,
         130
       ],
       "size": [
@@ -213,7 +221,7 @@
         270
       ],
       "flags": {},
-      "order": 12,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -243,7 +251,7 @@
         82
       ],
       "flags": {},
-      "order": 3,
+      "order": 2,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -277,7 +285,7 @@
         106
       ],
       "flags": {},
-      "order": 4,
+      "order": 3,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -301,10 +309,87 @@
       ]
     },
     {
+      "id": 6,
+      "type": "EmptySD3LatentImage",
+      "pos": [
+        920,
+        460
+      ],
+      "size": [
+        340,
+        106
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            7
+          ]
+        }
+      ],
+      "title": "📐 Resolución base 1024×1024",
+      "properties": {
+        "Node name for S&R": "EmptySD3LatentImage"
+      },
+      "widgets_values": [
+        640,
+        960,
+        1
+      ]
+    },
+    {
+      "id": 15,
+      "type": "LatentUpscale",
+      "pos": [
+        1880,
+        440
+      ],
+      "size": [
+        380,
+        130
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            22
+          ]
+        }
+      ],
+      "title": "🔍 Latent Upscale ×1.5  →  1536×1536",
+      "properties": {
+        "Node name for S&R": "LatentUpscale"
+      },
+      "widgets_values": [
+        "bislerp",
+        960,
+        1440,
+        "disabled"
+      ]
+    },
+    {
       "id": 14,
       "type": "PostImageToAPI",
       "pos": [
-        2160,
+        3050,
         230
       ],
       "size": [
@@ -312,7 +397,7 @@
         220
       ],
       "flags": {},
-      "order": 13,
+      "order": 16,
       "mode": 0,
       "inputs": [
         {
@@ -344,42 +429,60 @@
         "Node name for S&R": "PostImageToAPI"
       },
       "widgets_values": [
-        "935348536JoanComeCeviche",
+        "---",
         "https://corelink.onrender.com/azzia/prompts"
       ]
     },
     {
-      "id": 6,
-      "type": "EmptySD3LatentImage",
+      "id": 17,
+      "type": "LoraLoaderCapture",
       "pos": [
-        920,
-        460
+        683.3360124174402,
+        -182.35904332498083
       ],
       "size": [
-        340,
-        106
+        312.2173828125,
+        126
       ],
       "flags": {},
-      "order": 5,
+      "order": 8,
       "mode": 0,
-      "inputs": [],
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 29
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 28
+        }
+      ],
       "outputs": [
         {
-          "name": "LATENT",
-          "type": "LATENT",
-          "slot_index": 0,
+          "name": "MODEL",
+          "type": "MODEL",
           "links": [
-            7
+            30,
+            33
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            31,
+            32
           ]
         }
       ],
-      "title": "📐 Resolución",
       "properties": {
-        "Node name for S&R": "EmptySD3LatentImage"
+        "Node name for S&R": "LoraLoaderCapture"
       },
       "widgets_values": [
-        640,
-        960,
+        "ahe.safetensors",
+        2.5,
         1
       ]
     },
@@ -387,21 +490,21 @@
       "id": 7,
       "type": "KSampler",
       "pos": [
-        1440,
-        130
+        1430.0851679896166,
+        106.9920623034297
       ],
       "size": [
-        380,
+        387.84921875,
         270
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 12
+          "link": 30
         },
         {
           "name": "positive",
@@ -437,107 +540,26 @@
           ]
         }
       ],
-      "title": "🎛️ KSampler  [Steps=8 · CFG=1.0 · euler/beta]",
+      "title": "🎛️ KSampler BASE  [Steps=8 · CFG=1.0 · euler/beta]",
       "properties": {
         "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        0,
+        null,
         8,
         11,
         1,
-        "euler_ancestral",
-        "ddim_uniform",
+        "euler",
+        "normal",
         1
-      ]
-    },
-    {
-      "id": 4,
-      "type": "CLIPTextEncode",
-      "pos": [
-        920,
-        130
-      ],
-      "size": [
-        460,
-        160
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 13
-        },
-        {
-          "name": "text",
-          "type": "STRING",
-          "widget": {
-            "name": "text"
-          },
-          "link": 15
-        }
-      ],
-      "outputs": [
-        {
-          "name": "CONDITIONING",
-          "type": "CONDITIONING",
-          "slot_index": 0,
-          "links": [
-            5
-          ]
-        }
-      ],
-      "title": "✏️ PROMPT POSITIVO",
-      "properties": {
-        "Node name for S&R": "CLIPTextEncode"
-      },
-      "widgets_values": [
-        ""
-      ]
-    },
-    {
-      "id": 11,
-      "type": "TextPassthrough",
-      "pos": [
-        358.2936462621126,
-        303.02782638420143
-      ],
-      "size": [
-        388.58187986699886,
-        266.8988100874989
-      ],
-      "flags": {},
-      "order": 6,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "slot_index": 0,
-          "links": [
-            15,
-            20
-          ]
-        }
-      ],
-      "title": "📝 Prompt Positivo",
-      "properties": {
-        "Node name for S&R": "TextPassthrough"
-      },
-      "widgets_values": [
-        ""
       ]
     },
     {
       "id": 10,
       "type": "LoraLoaderCapture",
       "pos": [
-        480,
-        130
+        259.20741558323294,
+        -176.37473823912333
       ],
       "size": [
         380,
@@ -564,7 +586,7 @@
           "type": "MODEL",
           "slot_index": 0,
           "links": [
-            12
+            29
           ]
         },
         {
@@ -572,8 +594,7 @@
           "type": "CLIP",
           "slot_index": 1,
           "links": [
-            13,
-            14
+            28
           ]
         }
       ],
@@ -583,8 +604,152 @@
       },
       "widgets_values": [
         "YummyHDzit.safetensors",
-        0.6,
+        0.2,
         1
+      ]
+    },
+    {
+      "id": 13,
+      "type": "SeedCapture",
+      "pos": [
+        1440,
+        440
+      ],
+      "size": [
+        280,
+        102
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "seed",
+          "type": "INT",
+          "slot_index": 0,
+          "links": [
+            17,
+            26
+          ]
+        },
+        {
+          "name": "seed_copy",
+          "type": "INT",
+          "slot_index": 1,
+          "links": [
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SeedCapture"
+      },
+      "widgets_values": [
+        368237112523965,
+        "randomize"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "KSampler",
+      "pos": [
+        2278.1987918725968,
+        81.92861065348733
+      ],
+      "size": [
+        380,
+        290
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 33
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 24
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 25
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 22
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            27
+          ]
+        }
+      ],
+      "title": "✨ KSampler HI-RES  [Steps=18 · denoise=0.55]",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        null,
+        18,
+        12,
+        1,
+        "euler",
+        "normal",
+        0.3
+      ]
+    },
+    {
+      "id": 11,
+      "type": "TextPassthrough",
+      "pos": [
+        473.7319882972134,
+        220.45697567447627
+      ],
+      "size": [
+        422.89924892686446,
+        313.62270850388904
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "slot_index": 0,
+          "links": [
+            15,
+            20
+          ]
+        }
+      ],
+      "title": "📝 Prompt Positivo",
+      "properties": {
+        "Node name for S&R": "TextPassthrough"
+      },
+      "widgets_values": [
+        "prompt"
       ]
     }
   ],
@@ -633,7 +798,7 @@
       8,
       7,
       0,
-      8,
+      15,
       0,
       "LATENT"
     ],
@@ -651,30 +816,6 @@
       0,
       10,
       1,
-      "CLIP"
-    ],
-    [
-      12,
-      10,
-      0,
-      7,
-      0,
-      "MODEL"
-    ],
-    [
-      13,
-      10,
-      1,
-      4,
-      0,
-      "CLIP"
-    ],
-    [
-      14,
-      10,
-      1,
-      5,
-      0,
       "CLIP"
     ],
     [
@@ -732,6 +873,94 @@
       14,
       2,
       "STRING"
+    ],
+    [
+      22,
+      15,
+      0,
+      16,
+      3,
+      "LATENT"
+    ],
+    [
+      24,
+      4,
+      0,
+      16,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      25,
+      5,
+      0,
+      16,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      26,
+      13,
+      0,
+      16,
+      4,
+      "INT"
+    ],
+    [
+      27,
+      16,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      28,
+      10,
+      1,
+      17,
+      1,
+      "CLIP"
+    ],
+    [
+      29,
+      10,
+      0,
+      17,
+      0,
+      "MODEL"
+    ],
+    [
+      30,
+      17,
+      0,
+      7,
+      0,
+      "MODEL"
+    ],
+    [
+      31,
+      17,
+      1,
+      4,
+      0,
+      "CLIP"
+    ],
+    [
+      32,
+      17,
+      1,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      33,
+      17,
+      0,
+      16,
+      0,
+      "MODEL"
     ]
   ],
   "groups": [
@@ -761,24 +990,36 @@
     },
     {
       "id": 3,
-      "title": "🎛️ Sampler + Salida",
+      "title": "🎛️ Base KSampler",
       "bounding": [
         1420,
         100,
-        1200,
-        450
+        900,
+        560
       ],
       "color": "#2a2a3b",
       "flags": {}
     },
     {
       "id": 4,
-      "title": "🚀 Captura & Envío Azzia",
+      "title": "✨ Hi-Res Fix  1536×1536",
       "bounding": [
-        2140,
-        110,
-        470,
-        380
+        2300,
+        100,
+        420,
+        560
+      ],
+      "color": "#2a2b3b",
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "🚀 Decode & Envío Azzia",
+      "bounding": [
+        2740,
+        100,
+        780,
+        400
       ],
       "color": "#3b2a2a",
       "flags": {}
@@ -788,10 +1029,10 @@
   "extra": {
     "frontendVersion": "1.44.19",
     "ds": {
-      "scale": 0.5836460894941697,
+      "scale": 1.3513057093104028,
       "offset": [
-        971.8677421878798,
-        154.1817179876639
+        -2341.408781510061,
+        -18.3258534727772
       ]
     }
   },
