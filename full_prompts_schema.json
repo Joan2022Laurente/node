@@ -1,0 +1,14 @@
+{
+  "_comentario": "Schema para FullPromptInjector. Agrega tus prompts completos en el array 'prompts'. El nodo elige uno al azar con anti-repetición.",
+
+  "prompts": [
+    "a beautiful woman sitting on the beach, golden hour light, wide shot, cinematic mood, 4k, raw photo, sharp focus, realistic skin texture",
+    "a beautiful woman posing in a white studio, studio softbox light, editorial mood, close-up portrait, 4k, raw photo, sharp focus",
+    "a beautiful woman gazing dreamily by a swimming pool, soft morning light, serene mood, medium shot, 4k, raw photo",
+    "a beautiful woman leaning against a wall in an alley, neon reflections, dutch angle, dramatic mood, 4k, sharp focus",
+    "a beautiful woman resting on a bed, candlelight, three-quarter view, provocative mood, 4k, raw photo, realistic skin texture",
+    "a beautiful woman stretching gracefully on a rooftop terrace, dramatic sunset, low angle shot, vibrant mood, 4k",
+    "a beautiful woman smiling on a tropical garden, overcast diffused light, medium shot, candid mood, 4k, raw photo",
+    "a beautiful woman lying down near the rocks, rimlight, side profile, cinematic mood, 4k, sharp focus, realistic skin texture"
+  ]
+}

@@ -202,10 +202,13 @@ class LoraLoaderCapture:
     CATEGORY = "Azzia_Nodes"
 
     @classmethod
-    def IS_CHANGED(s, **kwargs):
-        # Forzar re-ejecución en cada prompt cambiando el hash
-        import random
-        return random.random()
+    def IS_CHANGED(s, lora_name="", strength_model=1.0, strength_clip=1.0, **kwargs):
+        # Retorna hash estable basado en los parámetros del LoRA.
+        # Solo se re-ejecuta si cambia el nombre o los strengths.
+        # Esto evita re-encoding innecesario del CLIP cuando el prompt es el mismo.
+        import hashlib
+        key = f"{lora_name}:{strength_model}:{strength_clip}"
+        return hashlib.md5(key.encode()).hexdigest()
 
     @classmethod
     def reset_loras(cls):
@@ -572,6 +575,114 @@ class AtomicPromptGenerator:
         return (prompt,)
 
 
+class FullPromptInjector:
+    """
+    Inyecta prompts completos de forma aleatoria desde una lista JSON.
+    El usuario escribe los prompts completos — no hay generación dinámica.
+    Usa anti-repetición por cooldown para no repetir el mismo prompt seguido.
+    """
+
+    # Historial de cooldown
+    _history: list = []
+
+    # Último prompt generado (para IS_CHANGED)
+    _last_prompt: str = ""
+
+    # DB interna de ejemplo (fallback si no se provee archivo)
+    _DEFAULT_PROMPTS = [
+        "a beautiful woman sitting on the beach, golden hour light, wide shot, cinematic mood, 4k, raw photo, sharp focus",
+        "a beautiful woman posing in a white studio, studio softbox light, editorial mood, close-up portrait, 4k",
+        "a beautiful woman gazing dreamily by a swimming pool, soft morning light, serene mood, medium shot, 4k",
+    ]
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "seed":     ("INT", {
+                    "default": -1, "min": -1, "max": 0xffffffffffffffff,
+                    "tooltip": "-1 = completamente aleatorio cada vez"
+                }),
+                "cooldown": ("INT", {"default": 3, "min": 1, "max": 50,
+                    "tooltip": "Cuántos prompts se recuerdan para evitar repetición"
+                }),
+            },
+            "optional": {
+                "db_file": ("STRING", {
+                    "default": "",
+                    "multiline": False,
+                    "placeholder": "C:/ruta/a/tu/prompts.json  (dejar vacío = usar DB interna)"
+                }),
+                "db_json": ("STRING", {
+                    "default": "",
+                    "multiline": True,
+                    "placeholder": 'Pega aquí tu JSON: {"prompts": ["prompt 1", "prompt 2", ...]}'
+                }),
+            }
+        }
+
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("prompt",)
+    FUNCTION = "inject"
+    CATEGORY = "Azzia_Nodes"
+
+    @classmethod
+    def IS_CHANGED(s, **kwargs):
+        return float("nan")
+
+    @classmethod
+    def _load_prompts(cls, db_file: str = "", db_json: str = "") -> list:
+        """Carga la lista de prompts completos desde archivo, JSON inline, o DB interna."""
+        if db_file and db_file.strip():
+            try:
+                with open(db_file.strip(), "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                prompts = data.get("prompts", data) if isinstance(data, dict) else data
+                if isinstance(prompts, list) and prompts:
+                    print(f"📝 FullPromptInjector: {len(prompts)} prompts cargados desde {db_file.strip()}")
+                    return [str(p) for p in prompts if str(p).strip()]
+            except Exception as e:
+                print(f"⚠️  FullPromptInjector: Error leyendo '{db_file}': {e}")
+
+        if db_json and db_json.strip():
+            try:
+                data = json.loads(db_json.strip())
+                prompts = data.get("prompts", data) if isinstance(data, dict) else data
+                if isinstance(prompts, list) and prompts:
+                    print(f"📝 FullPromptInjector: {len(prompts)} prompts cargados desde JSON inline")
+                    return [str(p) for p in prompts if str(p).strip()]
+            except Exception as e:
+                print(f"⚠️  FullPromptInjector: JSON inline inválido: {e}")
+
+        print("📝 FullPromptInjector: Usando DB interna de ejemplo")
+        return cls._DEFAULT_PROMPTS
+
+    def inject(self, seed, cooldown, db_file="", db_json=""):
+        if seed != -1:
+            random.seed(seed)
+
+        prompts = self._load_prompts(db_file, db_json)
+
+        # Anti-repetición por cooldown
+        used = self.__class__._history
+        available = [p for p in prompts if p not in used]
+        if not available:
+            self.__class__._history = []
+            available = prompts
+
+        chosen = random.choice(available)
+
+        # Actualizar historial
+        history = self.__class__._history
+        history.append(chosen)
+        if len(history) > cooldown:
+            history = history[-cooldown:]
+        self.__class__._history = history
+        self.__class__._last_prompt = chosen
+
+        print(f"💬 FullPromptInjector → {chosen[:80]}{'...' if len(chosen) > 80 else ''}")
+        return (chosen,)
+
 NODE_CLASS_MAPPINGS = {
     "PostImageToAPI": PostImageToAPI,
     "TextPassthrough": TextPassthrough,
@@ -580,6 +691,7 @@ NODE_CLASS_MAPPINGS = {
     "UNETCapture": UNETCapture,
     "LoraLoaderCapture": LoraLoaderCapture,
     "AtomicPromptGenerator": AtomicPromptGenerator,
+    "FullPromptInjector": FullPromptInjector,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -590,4 +702,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "UNETCapture": "🧠 UNET Loader Flux (Auto-Capture)",
     "LoraLoaderCapture": "✨ LoRA Loader (Auto-Capture)",
     "AtomicPromptGenerator": "⚛️ Atomic Prompt Generator",
+    "FullPromptInjector": "💬 Full Prompt Injector",
 }
