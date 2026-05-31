@@ -1,8 +1,8 @@
 {
   "id": "zimage-turbo-t2i-v1",
   "revision": 1,
-  "last_node_id": 17,
-  "last_link_id": 33,
+  "last_node_id": 18,
+  "last_link_id": 35,
   "nodes": [
     {
       "id": 3,
@@ -38,40 +38,6 @@
       ]
     },
     {
-      "id": 12,
-      "type": "TextPassthrough",
-      "pos": [
-        480,
-        460
-      ],
-      "size": [
-        380,
-        100
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "slot_index": 0,
-          "links": [
-            16,
-            21
-          ]
-        }
-      ],
-      "title": "📝 Prompt Negativo",
-      "properties": {
-        "Node name for S&R": "TextPassthrough"
-      },
-      "widgets_values": [
-        "blurry, deformed, bad anatomy, watermark, low quality, CGI"
-      ]
-    },
-    {
       "id": 4,
       "type": "CLIPTextEncode",
       "pos": [
@@ -83,7 +49,7 @@
         160
       ],
       "flags": {},
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -131,7 +97,7 @@
         110
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -179,7 +145,7 @@
         58
       ],
       "flags": {},
-      "order": 14,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -221,7 +187,7 @@
         270
       ],
       "flags": {},
-      "order": 15,
+      "order": 16,
       "mode": 0,
       "inputs": [
         {
@@ -240,40 +206,6 @@
       ]
     },
     {
-      "id": 1,
-      "type": "UNETCapture",
-      "pos": [
-        40,
-        130
-      ],
-      "size": [
-        380,
-        82
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "slot_index": 0,
-          "links": [
-            1
-          ]
-        }
-      ],
-      "title": "🧠 Dark Beast FP8 (Auto-Capture)",
-      "properties": {
-        "Node name for S&R": "UNETCapture"
-      },
-      "widgets_values": [
-        "divingZimageTurbo.safetensors",
-        "default"
-      ]
-    },
-    {
       "id": 2,
       "type": "CLIPLoader",
       "pos": [
@@ -285,7 +217,7 @@
         106
       ],
       "flags": {},
-      "order": 3,
+      "order": 1,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -320,7 +252,7 @@
         106
       ],
       "flags": {},
-      "order": 4,
+      "order": 2,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -355,7 +287,7 @@
         130
       ],
       "flags": {},
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -386,54 +318,6 @@
       ]
     },
     {
-      "id": 14,
-      "type": "PostImageToAPI",
-      "pos": [
-        3050,
-        230
-      ],
-      "size": [
-        430,
-        220
-      ],
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 19
-        },
-        {
-          "name": "positive_prompt",
-          "shape": 7,
-          "type": "STRING",
-          "link": 20
-        },
-        {
-          "name": "negative_prompt",
-          "shape": 7,
-          "type": "STRING",
-          "link": 21
-        },
-        {
-          "name": "seed",
-          "shape": 7,
-          "type": "INT",
-          "link": 18
-        }
-      ],
-      "outputs": [],
-      "properties": {
-        "Node name for S&R": "PostImageToAPI"
-      },
-      "widgets_values": [
-        "---",
-        "https://corelink.onrender.com/azzia/prompts"
-      ]
-    },
-    {
       "id": 17,
       "type": "LoraLoaderCapture",
       "pos": [
@@ -445,7 +329,7 @@
         126
       ],
       "flags": {},
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -498,7 +382,7 @@
         270
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -566,13 +450,13 @@
         130
       ],
       "flags": {},
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 1
+          "link": 35
         },
         {
           "name": "clip",
@@ -620,7 +504,7 @@
         102
       ],
       "flags": {},
-      "order": 5,
+      "order": 3,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -662,7 +546,7 @@
         290
       ],
       "flags": {},
-      "order": 13,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -719,6 +603,159 @@
       ]
     },
     {
+      "id": 12,
+      "type": "TextPassthrough",
+      "pos": [
+        470.1502673241926,
+        597.0008272180506
+      ],
+      "size": [
+        380,
+        100
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "slot_index": 0,
+          "links": [
+            16,
+            21
+          ]
+        }
+      ],
+      "title": "📝 Prompt Negativo",
+      "properties": {
+        "Node name for S&R": "TextPassthrough"
+      },
+      "widgets_values": [
+        "blurry, deformed, bad anatomy, watermark, low quality, CGI"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "UNETCapture",
+      "pos": [
+        40,
+        130
+      ],
+      "size": [
+        380,
+        82
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            34
+          ]
+        }
+      ],
+      "title": "🧠 Dark Beast FP8 (Auto-Capture)",
+      "properties": {
+        "Node name for S&R": "UNETCapture"
+      },
+      "widgets_values": [
+        "divingZimageTurbo.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 18,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        -39.38067682802114,
+        -108.4509075863758
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 34
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            35
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow"
+      },
+      "widgets_values": [
+        5
+      ]
+    },
+    {
+      "id": 14,
+      "type": "PostImageToAPI",
+      "pos": [
+        3050,
+        230
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 19
+        },
+        {
+          "name": "positive_prompt",
+          "shape": 7,
+          "type": "STRING",
+          "link": 20
+        },
+        {
+          "name": "negative_prompt",
+          "shape": 7,
+          "type": "STRING",
+          "link": 21
+        },
+        {
+          "name": "seed",
+          "shape": 7,
+          "type": "INT",
+          "link": 18
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PostImageToAPI"
+      },
+      "widgets_values": [
+        "---",
+        "https://corelink.onrender.com/azzia/prompts"
+      ]
+    },
+    {
       "id": 11,
       "type": "TextPassthrough",
       "pos": [
@@ -749,19 +786,11 @@
         "Node name for S&R": "TextPassthrough"
       },
       "widgets_values": [
-        "prompt"
+        ".\n"
       ]
     }
   ],
   "links": [
-    [
-      1,
-      1,
-      0,
-      10,
-      0,
-      "MODEL"
-    ],
     [
       4,
       3,
@@ -961,6 +990,22 @@
       16,
       0,
       "MODEL"
+    ],
+    [
+      34,
+      1,
+      0,
+      18,
+      0,
+      "MODEL"
+    ],
+    [
+      35,
+      18,
+      0,
+      10,
+      0,
+      "MODEL"
     ]
   ],
   "groups": [
@@ -1029,10 +1074,10 @@
   "extra": {
     "frontendVersion": "1.44.19",
     "ds": {
-      "scale": 1.3513057093104028,
+      "scale": 0.7627768444385522,
       "offset": [
-        -2341.408781510061,
-        -18.3258534727772
+        566.9510410653104,
+        254.8196336392012
       ]
     }
   },
