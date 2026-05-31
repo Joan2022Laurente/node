@@ -1,0 +1,1031 @@
+{
+  "id": "zimage-turbo-t2i-v1",
+  "revision": 1,
+  "last_node_id": 22,
+  "last_link_id": 41,
+  "nodes": [
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [
+        40,
+        230
+      ],
+      "size": [
+        380,
+        106
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [
+            11
+          ]
+        }
+      ],
+      "title": "📝 Qwen3-4B Text Encoder",
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen_3_4b.safetensors",
+        "lumina2",
+        "default"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        40,
+        370
+      ],
+      "size": [
+        380,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [
+            4,
+            37
+          ]
+        }
+      ],
+      "title": "🖼️ Flux VAE",
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "PostImageToAPI",
+      "pos": [
+        3048.082140906973,
+        279.5653316323165
+      ],
+      "size": [
+        430,
+        220
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 19
+        },
+        {
+          "name": "positive_prompt",
+          "shape": 7,
+          "type": "STRING",
+          "link": 20
+        },
+        {
+          "name": "negative_prompt",
+          "shape": 7,
+          "type": "STRING",
+          "link": 21
+        },
+        {
+          "name": "seed",
+          "shape": 7,
+          "type": "INT",
+          "link": 18
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PostImageToAPI"
+      },
+      "widgets_values": [
+        "935348536JoanComeCeviche",
+        "https://corelink.onrender.com/azzia/prompts"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "LoraLoaderCapture",
+      "pos": [
+        628.8567130015149,
+        -196.7800369356304
+      ],
+      "size": [
+        312.2173828125,
+        126
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 29
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            33
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            31,
+            32
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderCapture"
+      },
+      "widgets_values": [
+        "ahe.safetensors",
+        0,
+        1
+      ]
+    },
+    {
+      "id": 4,
+      "type": "CLIPTextEncode",
+      "pos": [
+        997.0606024873109,
+        -25.762729918538366
+      ],
+      "size": [
+        460,
+        160
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 31
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            24
+          ]
+        }
+      ],
+      "title": "✏️ PROMPT POSITIVO",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 5,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1001.7640095534232,
+        193.11378091853373
+      ],
+      "size": [
+        460,
+        110
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 32
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            25
+          ]
+        }
+      ],
+      "title": "🚫 PROMPT NEGATIVO",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 20,
+      "type": "VAEEncode",
+      "pos": [
+        1467.5631387007347,
+        -236.54211755517963
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 41
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 37
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            36
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 13,
+      "type": "SeedCapture",
+      "pos": [
+        1531.5877304212465,
+        360.0692198885438
+      ],
+      "size": [
+        280,
+        102
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "seed",
+          "type": "INT",
+          "slot_index": 0,
+          "links": [
+            26
+          ]
+        },
+        {
+          "name": "seed_copy",
+          "type": "INT",
+          "slot_index": 1,
+          "links": [
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SeedCapture"
+      },
+      "widgets_values": [
+        909400562334113,
+        "randomize"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "LoraLoaderCapture",
+      "pos": [
+        260.2270569039327,
+        -198.80739741176598
+      ],
+      "size": [
+        380,
+        130
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 39
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            29
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 1,
+          "links": [
+            28
+          ]
+        }
+      ],
+      "title": "✨ LoRA — YummyHDzit (Auto-Capture)",
+      "properties": {
+        "Node name for S&R": "LoraLoaderCapture"
+      },
+      "widgets_values": [
+        "YummyHDzit.safetensors",
+        0,
+        1
+      ]
+    },
+    {
+      "id": 22,
+      "type": "ImageScaleToTotalPixels",
+      "pos": [
+        1061.9899775912145,
+        -448.59134100886956
+      ],
+      "size": [
+        310,
+        110
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 40
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            41
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageScaleToTotalPixels"
+      },
+      "widgets_values": [
+        "nearest-exact",
+        2,
+        1
+      ]
+    },
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [
+        2631.813351008111,
+        131.6022935039567
+      ],
+      "size": [
+        230,
+        58
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 27
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            9,
+            19
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 9,
+      "type": "SaveImage",
+      "pos": [
+        3054.8070565493904,
+        -22.2216236731788
+      ],
+      "size": [
+        320,
+        270
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 9
+        }
+      ],
+      "outputs": [],
+      "title": "💾 Guardar imagen",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "zimage_t2i"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "TextPassthrough",
+      "pos": [
+        513.5416406393829,
+        415.2132185936427
+      ],
+      "size": [
+        380,
+        100
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "slot_index": 0,
+          "links": [
+            16,
+            21
+          ]
+        }
+      ],
+      "title": "📝 Prompt Negativo",
+      "properties": {
+        "Node name for S&R": "TextPassthrough"
+      },
+      "widgets_values": [
+        "blurry, low quality, pixelated"
+      ]
+    },
+    {
+      "id": 18,
+      "type": "LoadImage",
+      "pos": [
+        616.2199897415377,
+        -578.8531218465461
+      ],
+      "size": [
+        282.798828125,
+        314
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            40
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "download (1).jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "UNETCapture",
+      "pos": [
+        -556.0067680227942,
+        -202.29928733014472
+      ],
+      "size": [
+        380,
+        82
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            38
+          ]
+        }
+      ],
+      "title": "🧠 Dark Beast FP8 (Auto-Capture)",
+      "properties": {
+        "Node name for S&R": "UNETCapture"
+      },
+      "widgets_values": [
+        "divingZimageTurbo.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "TextPassthrough",
+      "pos": [
+        500.4878094446409,
+        12.22745080765911
+      ],
+      "size": [
+        422.89924892686446,
+        313.62270850388904
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "slot_index": 0,
+          "links": [
+            15,
+            20
+          ]
+        }
+      ],
+      "title": "📝 Prompt Positivo",
+      "properties": {
+        "Node name for S&R": "TextPassthrough"
+      },
+      "widgets_values": [
+        "photograph, candid shot, natural skin texture, pores visible, subtle imperfections, ambient light, realistic shadows, film grain, everyday scene, authentic colors, handheld camera feel"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "KSampler",
+      "pos": [
+        1963.5279823923318,
+        -81.7080582471629
+      ],
+      "size": [
+        380,
+        290
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 33
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 24
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 25
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 36
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            27
+          ]
+        }
+      ],
+      "title": "✨ KSampler HI-RES  [Steps=18 · denoise=0.55]",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        0,
+        18,
+        9,
+        1,
+        "euler",
+        "beta",
+        0.35
+      ]
+    },
+    {
+      "id": 21,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        -145.77970191701152,
+        -207.94305386568922
+      ],
+      "size": [
+        290,
+        110
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 38
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            39
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow"
+      },
+      "widgets_values": [
+        3
+      ]
+    }
+  ],
+  "links": [
+    [
+      4,
+      3,
+      0,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      9,
+      8,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      11,
+      2,
+      0,
+      10,
+      1,
+      "CLIP"
+    ],
+    [
+      15,
+      11,
+      0,
+      4,
+      1,
+      "STRING"
+    ],
+    [
+      16,
+      12,
+      0,
+      5,
+      1,
+      "STRING"
+    ],
+    [
+      18,
+      13,
+      1,
+      14,
+      3,
+      "INT"
+    ],
+    [
+      19,
+      8,
+      0,
+      14,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      11,
+      0,
+      14,
+      1,
+      "STRING"
+    ],
+    [
+      21,
+      12,
+      0,
+      14,
+      2,
+      "STRING"
+    ],
+    [
+      24,
+      4,
+      0,
+      16,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      25,
+      5,
+      0,
+      16,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      26,
+      13,
+      0,
+      16,
+      4,
+      "INT"
+    ],
+    [
+      27,
+      16,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      28,
+      10,
+      1,
+      17,
+      1,
+      "CLIP"
+    ],
+    [
+      29,
+      10,
+      0,
+      17,
+      0,
+      "MODEL"
+    ],
+    [
+      31,
+      17,
+      1,
+      4,
+      0,
+      "CLIP"
+    ],
+    [
+      32,
+      17,
+      1,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      33,
+      17,
+      0,
+      16,
+      0,
+      "MODEL"
+    ],
+    [
+      36,
+      20,
+      0,
+      16,
+      3,
+      "LATENT"
+    ],
+    [
+      37,
+      3,
+      0,
+      20,
+      1,
+      "VAE"
+    ],
+    [
+      38,
+      1,
+      0,
+      21,
+      0,
+      "MODEL"
+    ],
+    [
+      39,
+      21,
+      0,
+      10,
+      0,
+      "MODEL"
+    ],
+    [
+      40,
+      18,
+      0,
+      22,
+      0,
+      "IMAGE"
+    ],
+    [
+      41,
+      22,
+      0,
+      20,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "📦 Modelos",
+      "bounding": [
+        20,
+        100,
+        870,
+        490
+      ],
+      "color": "#2a363b",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "✏️ Prompts + Res",
+      "bounding": [
+        900,
+        100,
+        510,
+        500
+      ],
+      "color": "#2a3b2a",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "🎛️ Base KSampler",
+      "bounding": [
+        1420,
+        100,
+        900,
+        560
+      ],
+      "color": "#2a2a3b",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "✨ Hi-Res Fix  1536×1536",
+      "bounding": [
+        2300,
+        100,
+        420,
+        560
+      ],
+      "color": "#2a2b3b",
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "🚀 Decode & Envío Azzia",
+      "bounding": [
+        2740,
+        100,
+        780,
+        400
+      ],
+      "color": "#3b2a2a",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "frontendVersion": "1.44.19",
+    "ds": {
+      "scale": 0.5730855330116971,
+      "offset": [
+        343.4789606222852,
+        321.81137956435947
+      ]
+    }
+  },
+  "version": 0.4
+}
