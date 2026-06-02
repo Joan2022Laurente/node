@@ -288,6 +288,7 @@ class PostImageToAPI:
                 "positive_prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
                 "negative_prompt": ("STRING", {"multiline": True, "default": "", "forceInput": True}),
                 "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff, "forceInput": True}),
+                "jwt_token": ("STRING", {"default": "", "placeholder": "🔑 JWT Bearer Token (requerido para autenticación)"}),
             }
         }
 
@@ -296,9 +297,12 @@ class PostImageToAPI:
     OUTPUT_NODE = True
     CATEGORY = "Azzia_Nodes"
 
-    def send_image(self, images, password, endpoint_url, positive_prompt="", negative_prompt="", seed=0):
+    def send_image(self, images, password, endpoint_url, positive_prompt="", negative_prompt="", seed=0, jwt_token=""):
         if not password:
             print("❌ ERROR: No se proporcionó contraseña para el cifrado AES.")
+            return {}
+        if not jwt_token:
+            print("❌ ERROR: No se proporcionó JWT Token. El backend rechazará la petición (401 Unauthorized).")
             return {}
 
         # Capturar datos automáticamente
@@ -372,7 +376,13 @@ class PostImageToAPI:
                     "negativePrompt": enc_neg_prompt
                 }
                 
-                response = requests.post(binary_endpoint, data=data, files=files, timeout=60)
+                response = requests.post(
+                    binary_endpoint,
+                    data=data,
+                    files=files,
+                    headers={"Authorization": f"Bearer {jwt_token}"},
+                    timeout=60
+                )
                 if response.status_code in [200, 201]:
                     print(f"🚀 ENVIADOOoOoOo Y CIFRADO (BINARIO): Status {response.status_code}")
                 else:
