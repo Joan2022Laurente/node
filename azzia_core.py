@@ -42,6 +42,28 @@ def encrypt_aes_v2(data, password):
     
     return VERSION_PREFIX + json.dumps(payload)
 
+def encrypt_binary_v2(image_bytes: bytes, password: str) -> bytes:
+    """
+    Cifra un buffer binario usando AES-256-CBC con PBKDF2-SHA256 (600k iteraciones).
+    Formato: [9 bytes "AZZIA_BIN"] + [16 bytes SALT] + [16 bytes IV] + [Ciphertext]
+    Compatible con la implementación AZZIA_BIN del frontend.
+    """
+    SALT_SIZE = 16
+    KEY_SIZE = 32
+    IV_SIZE = 16
+    ITERATIONS = 600000
+    HEADER = b"AZZIA_BIN"
+
+    salt = get_random_bytes(SALT_SIZE)
+    iv = get_random_bytes(IV_SIZE)
+    key = PBKDF2(password, salt, dkLen=KEY_SIZE, count=ITERATIONS, hmac_hash_module=SHA256)
+    
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    padded_data = pad(image_bytes, AES.block_size)
+    ciphertext = cipher.encrypt(padded_data)
+
+    return HEADER + salt + iv + ciphertext
+
 
 class TextPassthrough:
     @classmethod
@@ -325,24 +347,36 @@ class PostImageToAPI:
             
             # 2. CIFRAR DATOS
             print("🔐 Cifrando datos con AES V2 (Azzia Secure Standard)...")
-            # Los prints de prompts han sido eliminados por privacidad
             
             try:
-                enc_image = encrypt_aes_v2(base64_image, password)
+                # Textos: cifrados en JSON string V2
                 enc_prompt = encrypt_aes_v2(final_prompt, password)
                 enc_neg_prompt = encrypt_aes_v2(neg_prompt, password)
                 
-                payload = {
+                # Imagen: cifrada en binario puro AZZIA_BIN
+                image_bytes = buffered.getvalue()
+                enc_image_binary = encrypt_binary_v2(image_bytes, password)
+                
+                # Modificamos la URL para apuntar al nuevo endpoint binario de forma automática
+                binary_endpoint = endpoint_url
+                if binary_endpoint.endswith("/azzia/prompts"):
+                    binary_endpoint += "/binary"
+                elif binary_endpoint.endswith("/azzia/prompts/"):
+                    binary_endpoint += "binary"
+                
+                files = {
+                    "image": ("image.bin", enc_image_binary, "application/octet-stream")
+                }
+                data = {
                     "prompt": enc_prompt,
-                    "negativePrompt": enc_neg_prompt,
-                    "imagenEncriptada": enc_image
+                    "negativePrompt": enc_neg_prompt
                 }
                 
-                response = requests.post(endpoint_url, json=payload, timeout=60)
+                response = requests.post(binary_endpoint, data=data, files=files, timeout=60)
                 if response.status_code in [200, 201]:
-                    print(f"🚀 ENVIADOOoOoOo Y CIFRADO: Status {response.status_code}")
+                    print(f"🚀 ENVIADOOoOoOo Y CIFRADO (BINARIO): Status {response.status_code}")
                 else:
-                    print(f"⚠️ Error {response.status_code}")
+                    print(f"⚠️ Error {response.status_code} - {response.text}")
                     
             except Exception as e:
                 print(f"❌ Error en el proceso de envío/cifrado: {e}")
